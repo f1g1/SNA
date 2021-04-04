@@ -17,6 +17,7 @@ def analyze_dataset(dataset):
 
     analyzer.plot_degree_distribution()
     analyzer.plot_distribution_of_the_clustering_coefficient()
+    analyzer.plot_distance_distribution()
     analyzer.plot_betweenness_centrality_distribution()
     analyzer.plot_connected_components_size_distribution()
 

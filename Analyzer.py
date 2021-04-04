@@ -72,6 +72,45 @@ class Analyzer:
             largest_connected_component = self.get_the_largest_connected_component()
             return nx.average_shortest_path_length(largest_connected_component)
 
+    def distance_distribution(self):
+        largest_connected_component = self.get_the_largest_connected_component()
+
+        N = len(self.dataset)
+        NO = len(largest_connected_component)
+        D = np.zeros(shape=(N, N))
+        vl = []
+        for node1 in largest_connected_component.nodes():
+            for node2 in largest_connected_component.nodes():
+                if (node1 != node2) and D[int(node1) - 1][int(node2) - 1] == 0:
+                    aux = nx.shortest_path(largest_connected_component, node1, node2)
+                    dij = len(aux)
+                    D[int(node1) - 1][int(node2) - 1] = dij
+                    D[int(node2) - 1][int(node1) - 1] = dij
+                    vl.append(dij)
+
+        d = {}
+        for elem in vl:
+            if elem in d:
+                d[elem] += 1
+            else:
+                d[elem] = 1
+
+        distances = sorted(d.keys())
+        pdistances = [d[i] / NO for i in distances]
+        return distances, pdistances
+
+    def plot_distance_distribution(self):
+        distances, pdistances = self.distance_distribution()
+
+        plt.figure(figsize=(6, 6))
+        plt.plot(distances, pdistances, linestyle="solid", linewidth=2, color="black")
+        plt.plot(distances, pdistances, "o", color='#c7502c', markersize=12)
+        plt.xlabel(r"$d$", fontsize=16)
+        plt.ylabel(r"$p_d$", fontsize=16)
+        plt.title("Distance distribution")
+        plt.grid(True)
+        plt.show()
+
     def density(self):
         return nx.density(self.dataset)
 
