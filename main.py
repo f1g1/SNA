@@ -16,10 +16,12 @@ def analyze_dataset(dataset):
           analyzer.average_clustering_coefficient_of_the_largest_connected_component())
 
     analyzer.plot_degree_distribution()
+    analyzer.plot_degree_distribution_in_loglog_scale()
     analyzer.plot_distribution_of_the_clustering_coefficient()
     analyzer.plot_distance_distribution()
     analyzer.plot_betweenness_centrality_distribution()
     analyzer.plot_connected_components_size_distribution()
+
 
 
 G = nx.read_weighted_edgelist("usairport.tar")

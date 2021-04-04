@@ -58,6 +58,22 @@ class Analyzer:
         plt.xlabel("Degree")
         plt.show()
 
+    def plot_degree_distribution_in_loglog_scale(self):
+        degrees = sorted([d for n, d in self.dataset.degree()], reverse=True)
+        kmin = np.min(degrees)
+        kmax = np.max(degrees)
+
+        bin_edges = np.logspace(np.log10(kmin), np.log10(kmax), num=50)
+        density, _ = np.histogram(degrees, bins=bin_edges, density=True)
+        log_be = np.log10(bin_edges)
+        x = 10 ** ((log_be[1:] + log_be[:-1]) / 2)
+
+        fig = plt.figure(figsize=(6, 4))
+        plt.loglog(x, density, marker='o', linestyle='none', color='#c7502c')
+        plt.xlabel(r"degree $k$", fontsize=16)
+        plt.ylabel(r"$P(k)$", fontsize=16)
+        plt.show()
+
     def diameter(self):
         if nx.is_connected(self.dataset):
             return nx.diameter(self.dataset)
