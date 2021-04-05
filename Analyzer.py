@@ -31,7 +31,7 @@ class Analyzer:
         is_network_connected = nx.is_connected(self.dataset)
         print("Is network connected: ", is_network_connected)
 
-        if is_network_connected:
+        if not is_network_connected:
             largest_connected_component = self.get_the_largest_connected_component()
             print("Connected components number: ", nx.number_connected_components(self.dataset))
             print("The largest connected component nodes number: ", len(largest_connected_component))
