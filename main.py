@@ -21,10 +21,13 @@ def analyze_dataset(dataset):
     analyzer.plot_distance_distribution()
     analyzer.plot_betweenness_centrality_distribution()
     analyzer.plot_connected_components_size_distribution()
-
+    analyzer.plot_connected_components_size_distribution_bar()
+    analyzer.draw()
+    analyzer.draw_heatmap_degree_distribution()
+    analyzer.draw_heatmap_betweenness_distribution()
+    analyzer.draw_heatmap_eigenvector_distribution()
+    analyzer.draw_heatmap_closeness_distribution()
 
 
 G = nx.read_weighted_edgelist("usairport.tar")
 analyze_dataset(G)
-
-
