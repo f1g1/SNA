@@ -164,6 +164,28 @@ class Analyzer:
         plt.ylabel('BC', fontsize=16)
         plt.show()
 
+    def plot_closeness_centrality_distribution(self):
+        cc = nx.closeness_centrality(self.dataset)
+        cc = np.asarray(list(cc.values()))
+        num_nodes = len(self.dataset.nodes())
+        nodes_axis = range(1, num_nodes+1)
+        plt.plot(nodes_axis, cc)
+        plt.title(" CC", fontsize=18)
+        plt.xlabel('Node Indices', fontsize=16)
+        plt.ylabel('Closeness centrality', fontsize=16)
+        plt.show()
+
+    def plot_eigenvector_centrality_distribution(self):
+        ec = nx.eigenvector_centrality(self.dataset)
+        ec = np.asarray(list(ec.values()))
+        num_nodes = len(self.dataset.nodes())
+        nodes_axis = range(1, num_nodes + 1)
+        plt.plot(nodes_axis, ec)
+        plt.title(" Eigenvector centrality distribution", fontsize=18)
+        plt.xlabel('Node Indices', fontsize=16)
+        plt.ylabel('Eigenvector centrality', fontsize=16)
+        plt.show()
+    
     def plot_connected_components_size_distribution(self):
         bc = list(nx.connected_components(self.dataset))
 
@@ -174,4 +196,97 @@ class Analyzer:
         plt.title(" CC", fontsize=18)
         plt.xlabel('Components Indices', fontsize=16)
         plt.ylabel('CC', fontsize=16)
+        plt.show()
+
+    def plot_connected_components_size_distribution_bar(self):
+        bc = list(nx.connected_components(self.dataset))
+        connected_components_no = [len(i) for i in bc]
+        components_index = [1, 2]
+        plt.bar(components_index, connected_components_no, log=True)
+        plt.title(" Size", fontsize=18)
+        plt.xlabel('Components', fontsize=16)
+        plt.ylabel('CC', fontsize=16)
+        plt.xticks(components_index)
+        plt.show()
+
+    def draw(self):
+        fix, ax = plt.subplots(figsize=(5, 4))
+        nx.draw_spring(self.dataset,
+                       with_labels=False,
+                       ax=ax,
+                       node_size=10,
+                       node_color="#1bb277",
+                       edge_color="#aa88cc",
+                       width=.20,
+                       font_size=3.0,
+                       font_color="#005566")
+        ax.set_title("US Airports spring")
+        plt.show()
+
+    def draw_heatmap_degree_distribution(self):
+        degrees = self.dataset.degree()
+        max_values = max([x[1] for x in degrees])
+        val_map = {}
+        for degree in degrees:
+            val_map[degree[0]] = degree[1] / max_values
+        values = [val_map.get(node, 0.25) for node in self.dataset.nodes()]
+        fix, ax = plt.subplots(figsize=(12, 6))
+        nx.draw_spring(self.dataset,
+                       with_labels=False,
+                       ax=ax,
+                       node_size=20,
+                       node_color=values,
+                       edge_color="#000000",
+                       width=.20)
+        plt.show()
+
+    def draw_heatmap_betweenness_distribution(self):
+        bc = nx.betweenness_centrality(self.dataset, normalized=True)
+        max_values = max(bc.values())
+        val_map = {}
+        for entry in bc:
+            val_map[entry] = bc.get(entry) / max_values
+        values = [val_map.get(node, 0.25) for node in self.dataset.nodes()]
+        fix, ax = plt.subplots(figsize=(12, 6))
+        nx.draw_spring(self.dataset,
+                       with_labels=False,
+                       ax=ax,
+                       node_size=20,
+                       node_color=values,
+                       edge_color="#000000",
+                       width=.20)
+        plt.show()
+
+    def draw_heatmap_eigenvector_distribution(self):
+        ec = nx.eigenvector_centrality(self.dataset)
+        max_values = max(ec.values())
+        val_map = {}
+        for entry in ec:
+            val_map[entry] = ec.get(entry) / max_values
+        values = [val_map.get(node, 0.25) for node in self.dataset.nodes()]
+        fix, ax = plt.subplots(figsize=(12, 6))
+        nx.draw_spring(self.dataset,
+                       with_labels=False,
+                       ax=ax,
+                       node_size=20,
+                       node_color=values,
+                       edge_color="#000000",
+                       width=.20)
+        plt.show()
+
+    def draw_heatmap_closeness_distribution(self):
+        cc = nx.closeness_centrality(self.dataset)
+        max_values = max(cc.values())
+        val_map = {}
+        for entry in cc:
+            val_map[entry] = cc.get(entry) / max_values
+        values = [val_map.get(node, 0.25) for node in self.dataset.nodes()]
+        fix, ax = plt.subplots(figsize=(12, 6))
+        nx.draw_spring(self.dataset,
+                       with_labels=False,
+                       ax=ax,
+                       node_size=20,
+                       node_color=values,
+                       edge_color="#000000",
+                       width=.20)
         plt.show()
