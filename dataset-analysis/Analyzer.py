@@ -152,7 +152,7 @@ class Analyzer:
         plt.show()
 
     def plot_betweenness_centrality_distribution(self):
-        bc = nx.betweenness_centrality(self.dataset, normalized=False)
+        bc = nx.betweenness_centrality(self.dataset, normalized=True)
         bc = np.asarray(list(bc.values()))
 
         num_nodes = len(self.dataset.nodes())

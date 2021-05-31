@@ -29,5 +29,7 @@ def analyze_dataset(dataset):
     analyzer.draw_heatmap_closeness_distribution()
 
 
-G = nx.read_weighted_edgelist("usairport.tar")
+#G = nx.read_weighted_edgelist("usairport.tar")
+#G = nx.read_weighted_edgelist("erdos_renyi_output.txt")
+G = nx.read_weighted_edgelist("barbase_albert_output.txt")
 analyze_dataset(G)
